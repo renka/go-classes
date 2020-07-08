@@ -12,11 +12,10 @@ func handleRequests() {
 	log.Printf("Started %s", port)
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/classes", returnAllClasses)
-	myRouter.HandleFunc("/class", createNewClass).Methods("POST")
-	myRouter.HandleFunc("/class/{id}", deleteClass).Methods("DELETE")
-	myRouter.HandleFunc("/classes/{id}", deleteClasses).Methods("DELETE")
-	myRouter.HandleFunc("/class/{id}", returnSingleClass)
+	myRouter.HandleFunc("/bookings/{userId}", returnAllBookings) // all bookings for user
+	myRouter.HandleFunc("/booking", createNewBooking).Methods("POST")
+	myRouter.HandleFunc("/bookings/{id}", deleteBooking).Methods("DELETE")
+	myRouter.HandleFunc("/booking/{id}", returnSingleBooking)
 	myRouter.HandleFunc("/version", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(version))
 	})

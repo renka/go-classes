@@ -1,5 +1,6 @@
 To run first part: 
 1. go to directory `classes-api/cmd/admin` and run command `go run *.go`
+2. Application starts on port `8081`
 
 There is possibility to view, create and delete courses. 
 Course - Entire class, means entity with name, start date and end date. It is not stored in database, because system splits it into small daily classes, one class per day. 
@@ -38,3 +39,12 @@ In terms of current example it is not possible to register another 'Functional w
 But it is possible to add 'Yoga' classes for the same dates. 
 There is possibility to remove one specific date by id or entire course by class_id (known issue - if 2 courses have the same id - doth will be removed, it is not important for now)
 
+To run second part: 
+1. go to directory `classes-api/cmd/user` and run command `go run *.go`
+2. Application starts on port `8082`
+
+This allows user to create booking using Username. Class with specific id can be booked only once for the same name. 
+User also can to review all bookings for his name and delete specific booking. 
+As far as there is no user authentication - no user validation was implemented. 
+To get list of available classes need to call endoint from admin application.
+If class was deleted - bookings for this class still in the system unless user deletes them

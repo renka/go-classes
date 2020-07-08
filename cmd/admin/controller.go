@@ -145,10 +145,6 @@ func validateClass(class EntireClass) string {
 	}
 	for _, c := range Classes {
 		date, _ := time.Parse(timeLayout, c.Date)
-		log.Println("start.Before(date)")
-		log.Println(start.Before(date))
-		log.Println("end.After(date)")
-		log.Println(end.After(date))
 		if c.Name == class.Name && (start.Before(date) && end.After(date)) {
 			return "Class with the same name is already registered on the same dates"
 		}
