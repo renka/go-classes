@@ -14,7 +14,7 @@ func handleRequests() {
 	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/bookings/{userId}", returnAllBookings) // all bookings for user
 	myRouter.HandleFunc("/booking", createNewBooking).Methods("POST")
-	myRouter.HandleFunc("/bookings/{id}", deleteBooking).Methods("DELETE")
+	myRouter.HandleFunc("/booking/{id}", deleteBooking).Methods("DELETE")
 	myRouter.HandleFunc("/booking/{id}", returnSingleBooking)
 	myRouter.HandleFunc("/version", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(version))

@@ -1,3 +1,6 @@
+Postman collection for testing: 
+`https://www.getpostman.com/collections/0342583d8c136c090d42`
+
 To run first part: 
 1. go to directory `classes-api/cmd/admin` and run command `go run *.go`
 2. Application starts on port `8081`
