@@ -22,7 +22,11 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func returnAllClasses(w http.ResponseWriter, r *http.Request) {
 	log.Println("Endpoint Hit: returnAllClasses")
-	json.NewEncoder(w).Encode(Classes)
+	if Classes == nil || len(Classes) == 0 {
+		common.ErrorResponse(w, "No classes were registered yet")
+	} else {
+		json.NewEncoder(w).Encode(Classes)
+	}
 }
 
 func returnSingleClass(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +42,7 @@ func returnSingleClass(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if !found {
-		errorResponse(w, "Class not found")
+		common.ErrorResponse(w, "Class not found")
 	}
 }
 
@@ -48,14 +52,14 @@ func createNewClass(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(&common.Error{Status: 500, Message: err.Error()})
+		common.ErrorResponse(w, err.Error())
 	}
 
 	var entireClass EntireClass
 	json.Unmarshal(reqBody, &entireClass)
 	error := validateClass(entireClass)
 	if error != "" {
-		errorResponse(w, error)
+		common.ErrorResponse(w, error)
 	} else {
 		writeSingleClassesResponse(entireClass, w)
 	}
@@ -74,7 +78,7 @@ func deleteClass(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if !found {
-		errorResponse(w, "Class not found")
+		common.ErrorResponse(w, "Class not found")
 	}
 
 }
@@ -91,13 +95,8 @@ func deleteClasses(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if !found {
-		errorResponse(w, "Classes not found")
+		common.ErrorResponse(w, "Classes not found")
 	}
-}
-
-func errorResponse(w http.ResponseWriter, message string) {
-	w.WriteHeader(http.StatusInternalServerError)
-	json.NewEncoder(w).Encode(&common.Error{Status: 500, Message: message})
 }
 
 // Generate separate classes from class description and write response

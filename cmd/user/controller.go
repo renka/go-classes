@@ -45,7 +45,7 @@ func returnSingleBooking(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if !found {
-		errorResponse(w, "Booking not found")
+		common.ErrorResponse(w, "Booking not found")
 	}
 }
 
@@ -62,7 +62,7 @@ func createNewBooking(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(reqBody, &booking)
 	error := validateBooking(booking)
 	if error != "" {
-		errorResponse(w, error)
+		common.ErrorResponse(w, error)
 	} else {
 		sequenceId++
 		booking.Id = sequenceId
@@ -84,14 +84,9 @@ func deleteBooking(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if !found {
-		errorResponse(w, "Booking not found")
+		common.ErrorResponse(w, "Booking not found")
 	}
 
-}
-
-func errorResponse(w http.ResponseWriter, message string) {
-	w.WriteHeader(http.StatusInternalServerError)
-	json.NewEncoder(w).Encode(&common.Error{Status: 500, Message: message})
 }
 
 func validateBooking(booking Booking) string {
