@@ -2,6 +2,7 @@ package main
 
 // Contains functions called from router
 import (
+	"../common"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -13,10 +14,6 @@ import (
 )
 
 var sequenceId = 0
-
-func (e *Error) Error() string {
-	return e.Error()
-}
 
 func homePage(w http.ResponseWriter, r *http.Request) {
 	log.Println("Endpoint Hit: homePage")
@@ -58,7 +55,7 @@ func createNewBooking(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(&Error{Status: 400, Message: err.Error()})
+		json.NewEncoder(w).Encode(&common.Error{Status: 400, Message: err.Error()})
 	}
 
 	var booking Booking
@@ -94,7 +91,7 @@ func deleteBooking(w http.ResponseWriter, r *http.Request) {
 
 func errorResponse(w http.ResponseWriter, message string) {
 	w.WriteHeader(http.StatusInternalServerError)
-	json.NewEncoder(w).Encode(&Error{Status: 500, Message: message})
+	json.NewEncoder(w).Encode(&common.Error{Status: 500, Message: message})
 }
 
 func validateBooking(booking Booking) string {

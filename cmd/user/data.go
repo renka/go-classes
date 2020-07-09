@@ -6,8 +6,3 @@ type Booking struct {
 	ClassId int    `json:"class_id"`
 	Date    string `json:"date"`
 }
-
-type Error struct {
-	Status  int
-	Message string
-}

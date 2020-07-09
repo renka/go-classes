@@ -17,8 +17,3 @@ type EntireClass struct {
 	StartDate string `json:"start_date"`
 	EndDate   string `json:"end_date"`
 }
-
-type Error struct {
-	Status  int
-	Message string
-}
